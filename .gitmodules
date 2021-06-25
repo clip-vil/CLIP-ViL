@@ -1,0 +1,6 @@
+[submodule "CLIP-ViL-Direct/caption/cider"]
+	path = CLIP-ViL-Direct/caption/cider
+	url = git@github.com:clip-vil/cider.git
+[submodule "CLIP-ViL-Direct/caption/coco-caption"]
+	path = CLIP-ViL-Direct/caption/coco-caption
+	url = git@github.com:clip-vil/coco-caption.git

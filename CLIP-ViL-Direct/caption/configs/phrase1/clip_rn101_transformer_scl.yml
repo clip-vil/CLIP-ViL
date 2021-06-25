@@ -1,0 +1,42 @@
+caption_model: transformer
+noamopt: true
+noamopt_warmup: 20000
+label_smoothing: 0.0
+input_json: data/cocotalk.json
+input_label_h5: data/cocotalk_label.h5
+input_fc_dir: data/cocotalk_clip_RN101_fc
+input_att_dir: data/cocotalk_clip_RN101_att
+seq_per_img: 5
+batch_size: 10
+learning_rate: 0.0005
+
+checkpoint_path: ./save/trans_clip_rn101_sc
+
+# Notice: because I'm to lazy, I reuse the option name for RNNs to set the hyperparameters for transformer:
+# N=num_layers
+# d_model=input_encoding_size
+# d_ff=rnn_size
+
+# will be ignored
+num_layers: 6
+input_encoding_size: 512
+rnn_size: 2048
+
+# Transformer config
+N_enc: 6
+N_dec: 6
+d_model: 512
+d_ff: 2048
+num_att_heads: 8
+dropout: 0.1
+
+
+learning_rate_decay_start: 0
+scheduled_sampling_start: -1 
+save_checkpoint_every: 3000
+language_eval: 1
+val_images_use: 5000
+max_epochs: 15
+train_sample_n: 5
+
+REFORWARD: false
