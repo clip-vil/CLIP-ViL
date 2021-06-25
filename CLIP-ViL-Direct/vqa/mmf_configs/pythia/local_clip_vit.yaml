@@ -1,0 +1,70 @@
+dataset_config:
+  vqa2:
+    use_images: false
+    use_features: true
+    zoo_requirements:
+    - vqa2.defaults
+    features:
+      train:
+      - grid-feats-vqa/clip/ViT/trainval2014
+      val:
+      - grid-feats-vqa/clip/ViT/trainval2014  
+      test:
+      - grid-feats-vqa/clip/ViT/test2015
+    annotations:
+      train:
+      - vqa2/defaults/annotations/imdb_train2014.npy
+      val:
+      - vqa2/defaults/annotations/imdb_val2014.npy
+      test:
+      - vqa2/defaults/annotations/imdb_test2015.npy
+
+optimizer:
+  type: Adamax
+  params:
+    eps: 1.0e-08
+    lr: 0.01
+    weight_decay: 0
+
+evaluation:
+  metrics:
+  - vqa_accuracy
+
+training:
+  clip_norm_mode: all
+  clip_gradients: true
+  lr_ratio: 0.1
+  lr_scheduler: true
+  lr_steps:
+  - 15000
+  - 18000
+  - 20000
+  - 21000
+  max_grad_l2_norm: 0.25
+  max_updates: 22000
+  use_warmup: true
+  warmup_factor: 0.2
+  warmup_iterations: 1000
+  batch_size: 512
+  num_workers: 7
+  task_size_proportional_sampling: true
+  early_stop:
+    criteria: vqa2/vqa_accuracy
+    minimize: false
+
+checkpoint:
+  pretrained_state_mapping:
+    word_embedding: word_embedding
+    text_embeddings: text_embeddings
+    image_feature_encoders: image_feature_encoders
+    image_feature_embeddings_list: image_feature_embeddings_list
+    image_text_multi_modal_combine_layer: image_text_multi_modal_combine_layer
+    classifier: classifier
+
+model_config:
+  pythia:
+    image_feature_encodings:
+    - type: default
+      params: {}
+    image_feature_dim: 768
+    

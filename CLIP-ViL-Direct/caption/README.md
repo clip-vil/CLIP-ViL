@@ -104,3 +104,13 @@ $ python tools/eval.py --input_json cocotest.json --input_fc_dir data/cocotest_b
 If you use CLIP-ViL in your research or wish to refer to the baseline results published here, 
 please use the following BibTeX entry. 
 
+```shell
+@unpublished{          
+anonymous2021how,          
+title={How Much Can CLIP Benefit Vision-and-Language Tasks?},          
+author={Anonymous},          
+journal={OpenReview Preprint},          
+year={2021},          
+note={anonymous preprint under review}      
+}
+```

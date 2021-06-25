@@ -1,0 +1,20 @@
+_BASE_: "Base-RCNN-grid.yaml"
+MODEL:
+  WEIGHTS: "catalog://ImageNetPretrained/FAIR/X-152-32x8d-IN5k"
+  RESNETS:
+    STRIDE_IN_1X1: False  # this is a C2 model
+    NUM_GROUPS: 32
+    WIDTH_PER_GROUP: 8
+    DEPTH: 152
+    DEFORM_ON_PER_STAGE: [False,False,True,True]
+  RPN:
+    BBOX_LOSS_WEIGHT: .5
+  ROI_BOX_HEAD:
+    BBOX_LOSS_WEIGHT: 0.
+    POOLER_SAMPLING_RATIO: 0
+INPUT:
+  MIN_SIZE_TRAIN: (360,600)
+  MIN_SIZE_TRAIN_SAMPLING: range
+SOLVER:
+  MAX_ITER: 60000
+  LR_SCHEDULER_NAME: WarmupCosineLR

@@ -1,0 +1,8 @@
+_BASE_: "Base-RCNN-grid.yaml"
+MODEL:
+  WEIGHTS: "catalog://ImageNetPretrained/FAIR/X-152-32x8d-IN5k"
+  RESNETS:
+    STRIDE_IN_1X1: False  # this is a C2 model
+    NUM_GROUPS: 32
+    WIDTH_PER_GROUP: 8
+    DEPTH: 152
