@@ -34,7 +34,7 @@ We will use COCO images and Visual Genome images for pre-training. We will also 
     unzip data/vg_raw_images/images2.zip -d data/vg_raw_images/VG_100K/
     ```
 
-3. Download Images Width and Height [data]() and save as `clip_vl/data/mscoco/width_heigths.json`
+3. Download Images Width and Height [Data](https://drive.google.com/file/d/1i7NbLQ-j3edv3zjFwX7paudkYPPtUdy4/view?usp=sharing) and save as `clip_vl/data/mscoco/width_heigths.json`
 
 
 ### Annotation files
@@ -50,7 +50,7 @@ We will use COCO images and Visual Genome images for pre-training. We will also 
     wget nlp.cs.unc.edu/data/lxmert_data/lxmert/mscoco_minival.json -P data/lxmert/
     ```
 
-2. Download the VQA annotation files from [LXMERT](https://github.com/airsplay/lxmert)
+2. Download the VQA annotation files from [LXMERT](https://github.com/airsplay/lxmert):
 
     ```bash
     cd clip_vl
@@ -79,7 +79,7 @@ pip install -v --disable-pip-version-check --no-cache-dir --global-option="--cpp
 ```
 
 ## Pre-Training
-We follow the LXMERT to do two stage pre-training. At state one, 
+We follow the LXMERT to do two stage pre-training. At state one, we train without the QA loss; at stage two, we traing with the QA loss.
 
 The general command to run experiments are:
 ```bash
