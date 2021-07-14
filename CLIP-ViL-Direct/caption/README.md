@@ -2,8 +2,11 @@
 
 In our paper "[How Much Can CLIP Benefit Vision-and-Language Tasks?](https://openreview.net/forum?id=I0tnw1fYFEN)", we show the improvement of CLIP features
 over the traditional resnet features on the image captioning task. 
+We got **2.1%** improvements in CIDEr metric over resnet alternatives; 
+
 
 We release the extracted features and reproducible code here.
+
 
 ## Environment Installation
 - Python 3

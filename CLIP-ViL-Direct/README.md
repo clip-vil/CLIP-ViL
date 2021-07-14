@@ -1,7 +1,7 @@
 # CLIP-ViL on Visual Question Answering and Image Captioning
 
 In our paper "[How Much Can CLIP Benefit Vision-and-Language Tasks?](https://openreview.net/forum?id=I0tnw1fYFEN)", we show the improvement of CLIP features
-over the traditional resnet features on the visual question answering and image caption tasks.
+over the traditional resnet features on the visual question answering and image captioning tasks.
 
 We release the extracted features and reproducible code here.
 

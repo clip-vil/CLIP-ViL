@@ -1,6 +1,7 @@
 # CLIP-ViL on VQA
 In our paper "[How Much Can CLIP Benefit Vision-and-Language Tasks?](https://openreview.net/forum?id=I0tnw1fYFEN)", we show the improvement of CLIP features
 over the traditional resnet features on the vqa task. 
+on VQA 2.0 `test-dev`, we are able to achieve up to **68.37%** accuracy with Pythia, **74.01%** accuracy with MCAN and generally more than **4.0%** improvements
 
 We release the extracted features and reproducible code here.
 
