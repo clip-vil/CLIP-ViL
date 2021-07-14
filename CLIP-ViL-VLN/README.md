@@ -1,9 +1,9 @@
 # CLIP-ViL on Vision-and-Language Navigation
 
 In our paper "[How Much Can CLIP Benefit Vision-and-Language Tasks?](https://openreview.net/forum?id=I0tnw1fYFEN)", we show the improvement of CLIP features
-over the traditional resnet features on the vision-and-language navigation tasks.
-On RxR, we achieve the current leaderboard top-1 under  and got **5%** improvements with the nDTW metric (the main metric for RxR).
-On R2R, we get about **6%** improvements in accuracy regarding our strong baselines.
+over the traditional resnet features on the vision-and-language navigation tasks ([R2R](https://bringmeaspoon.org/) and [RxR](https://ai.google.com/research/rxr/)).
+On RxR, we got **5%** improvements with the nDTW metric (the main metric for RxR).
+On R2R, we got about **6%** improvements in accuracy regarding our strong baselines.
 
 We release the extracted features and reproducible code here.
 
@@ -29,15 +29,6 @@ Note:
 if some error messages like `double err = cv::norm(reference_image, state->rgb, CV_L2);` pop up, please just ignore them.
 They are about test but would not affect the training agent.
 
-## Feature and Data Download URL
-```shell
-export URL=''
-```
-The data are defaultly stored on our server. 
-We will show the URL here in any nonanonymous version. 
-Currently, please use the following link to download the feature and data:[to-be-update](to-be-update).
-Directory structures are the same.
-
 ## Pre-Computed Features
 ### ImageNet ResNet101
 ```
@@ -52,7 +43,7 @@ For ViT features, we simply use the CLIP's encode_image function, which
 is a projection over the feature of the \[CLS\] token.
 You could download the features with this link:
 ```shell
-wget https://$URL/data/vln_clip/features/CLIP-ViT-B-32-views.tsv -P img_features
+wget https://nlp.cs.unc.edu/data/vln_clip/features/CLIP-ViT-B-32-views.tsv -P img_features
 ```
 We also provided the feature extraction code in `precomute_imagenet_views.py`.
 The images (skyboxes) need to be downloaded from [here] to extract the features.
@@ -62,7 +53,7 @@ The images (skyboxes) need to be downloaded from [here] to extract the features.
 ### Data
 Please download the pre-processed data with link:
 ```shell
-wget https://$URL/data/vln_clip/RxR.zip -P tasks
+wget https://nlp.cs.unc.edu/data/vln_clip/RxR.zip -P tasks
 unzip tasks/RxR.zip -d tasks/
 ```
 We might release the data processing code later.
@@ -193,13 +184,13 @@ The CLIP's ResNet is almost the same as CLIP ViT.
 Hence, the improvements are mostly come from the backbone supervision (i.e., the data)
 instead of the model architecture.
 ```shell
-wget https://$URL/data/vln_clip/features/grid-feat-rn50-BGR-views.tsv -P img_features
+wget https://nlp.cs.unc.edu/data/vln_clip/features/grid-feat-rn50-BGR-views.tsv -P img_features
 ```
 
 ### Grid Features 
 We also investigate the grid features provided 
 ```shell
-wget https://$URL/data/vln_clip/features/grid-feat-x101-BGR-views.tsv -P img_features
+wget https://nlp.cs.unc.edu/data/vln_clip/features/grid-feat-x101-BGR-views.tsv -P img_features
 ```
 
 ### Modifying script
@@ -217,6 +208,9 @@ The script will go over the dir and trying modifying the files.
 - RxR Dataset: [paper](https://arxiv.org/abs/2010.07954), [code](https://github.com/google-research-datasets/RxR)
 - Stanza: [paper](https://arxiv.org/abs/2003.07082), [project](https://stanfordnlp.github.io/stanza/) [code](https://github.com/stanfordnlp/stanza)
 - Grid Features: [paper](https://arxiv.org/abs/2001.03615), [code](https://github.com/facebookresearch/grid-feats-vqa)
+
+## Acknowledgement
+We thank [Jialu Li](https://jialuli-luka.github.io/) to provide the preprocessing tools of RxR dataset.
 
 ## Reference
 If you use CLIP-ViL in your research or wish to refer to the baseline results published here, 
