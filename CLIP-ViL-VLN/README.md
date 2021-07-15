@@ -1,6 +1,6 @@
 # CLIP-ViL on Vision-and-Language Navigation
 
-In our paper "[How Much Can CLIP Benefit Vision-and-Language Tasks?](https://openreview.net/forum?id=I0tnw1fYFEN)", we show the improvement of CLIP features
+In our paper "[How Much Can CLIP Benefit Vision-and-Language Tasks?](https://arxiv.org/abs/2107.06383)", we show the improvement of CLIP features
 over the traditional resnet features on the vision-and-language navigation tasks ([R2R](https://bringmeaspoon.org/) and [RxR](https://ai.google.com/research/rxr/)).
 On RxR, we got **5%** improvements with the nDTW metric (the main metric for RxR).
 On R2R, we got about **6%** improvements in accuracy regarding our strong baselines.
@@ -217,12 +217,12 @@ If you use CLIP-ViL in your research or wish to refer to the baseline results pu
 please use the following BibTeX entry. 
 
 ```shell
-@unpublished{          
-anonymous2021how,          
-title={How Much Can CLIP Benefit Vision-and-Language Tasks?},          
-author={Anonymous},          
-journal={OpenReview Preprint},          
-year={2021},          
-note={anonymous preprint under review}      
+@misc{shen2021clip,
+    title={How Much Can CLIP Benefit Vision-and-Language Tasks?}, 
+    author={Sheng Shen and Liunian Harold Li and Hao Tan and Mohit Bansal and Anna Rohrbach and Kai-Wei Chang and Zhewei Yao and Kurt Keutzer},
+    year={2021},
+    eprint={2107.06383},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
 }
 ```
