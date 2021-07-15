@@ -1,6 +1,6 @@
 
 ## Intro
-This is code and checkpoints for the vision-and-language pre-training model in our paper "How Much Can CLIP Benefit Vision-and-Language Tasks?" ([Link](https://openreview.net/forum?id=I0tnw1fYFEN)).
+This is code and checkpoints for the vision-and-language pre-training model in our paper "How Much Can CLIP Benefit Vision-and-Language Tasks?" ([Link](https://arxiv.org/abs/2107.06383)).
 
 CLIP-ViL with pre-training sets new single-model state-of-the-arts on benchmarks such as VQA v2.0 (76.70 on test-std).
 

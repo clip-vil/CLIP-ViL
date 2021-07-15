@@ -1,6 +1,6 @@
 # CLIP-ViL on Image Captioning
 
-In our paper "[How Much Can CLIP Benefit Vision-and-Language Tasks?](https://openreview.net/forum?id=I0tnw1fYFEN)", we show the improvement of CLIP features
+In our paper "[How Much Can CLIP Benefit Vision-and-Language Tasks?](https://arxiv.org/abs/2107.06383)", we show the improvement of CLIP features
 over the traditional resnet features on the image captioning task. 
 We got **2.1%** improvements in CIDEr metric over resnet alternatives; 
 
@@ -59,13 +59,13 @@ First you should preprocess the dataset and get the cache for calculating cider 
 ```
 $ python scripts/prepro_ngrams.py --input_json data/dataset_coco.json --dict_json data/cocotalk.json --output_pkl data/coco-train --split train
 ```
-We first train the model using configs in `configs/phrase1` with cross entropy objective. 
+We first train the model using configs in `configs/phrase1` with cross entropy objective. Please try to use **one** GPU to launch the experiment in this directory, the multiple-GPU setting may have some issues in the current version. 
 ```
 $ python tools/train.py --cfg configs/phrase1/clip_rn50_transformer_scl.yml --id trans_clip_rn50
 ```
 
 
-Then, copy the model from the pretrained model using cross entropy or keep it in the previous directory. (It's not mandatory to copy the model, just for back-up)
+After that, copy the model from the pretrained model using cross entropy or keep it in the previous directory. (It's not mandatory to copy the model, just for back-up)
 ```
 $ bash scripts/copy_model.sh trans_clip_rn50 trans_clip_rn50_rl
 ```
