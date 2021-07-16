@@ -1,6 +1,6 @@
 # Prepare data
 
-Note: every preprocessed file or preextracted features can be found in [link](https://drive.google.com/open?id=1eCdz62FAVCGogOuNhy87Nmlo5_I0sH2J).
+Note: every preprocessed file or preextracted features can be found in [link](https://drive.google.com/open?id=1eCdz62FAVCGogOuNhy87Nmlo5_I0sH2J) from [ImageCaptioning.pytorch](https://github.com/ruotianluo/ImageCaptioning.pytorch/). Please put this in the data directory before moving forward. 
 
 ## COCO
 
