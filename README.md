@@ -36,12 +36,10 @@ If you use CLIP-ViL in your research or wish to refer to the baseline results pu
 please use the following BibTeX entry. 
 
 ```shell
-@misc{shen2021clip,
-    title={How Much Can CLIP Benefit Vision-and-Language Tasks?}, 
-    author={Sheng Shen and Liunian Harold Li and Hao Tan and Mohit Bansal and Anna Rohrbach and Kai-Wei Chang and Zhewei Yao and Kurt Keutzer},
-    year={2021},
-    eprint={2107.06383},
-    archivePrefix={arXiv},
-    primaryClass={cs.CV}
+@article{shen2021much,
+  title={How Much Can CLIP Benefit Vision-and-Language Tasks?},
+  author={Shen, Sheng and Li, Liunian Harold and Tan, Hao and Bansal, Mohit and Rohrbach, Anna and Chang, Kai-Wei and Yao, Zhewei and Keutzer, Kurt},
+  journal={arXiv preprint arXiv:2107.06383},
+  year={2021}
 }
 ```

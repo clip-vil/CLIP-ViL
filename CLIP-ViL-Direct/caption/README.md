@@ -8,6 +8,8 @@ We got **2.1%** improvements in CIDEr metric over resnet alternatives;
 We release the extracted features and reproducible code here.
 
 
+Our pretrained ckeckpoints are at [CLIP-RN50](https://drive.google.com/file/d/1QgHmpXQ6ZYYDhvCsq2b3QyIz4CPGp5UL/view?usp=sharing), [CLIP-RN101](https://drive.google.com/file/d/1cNF2u0h_mZ2Z3HUKsFKEc0USW2owMs_3/view?usp=sharing), [CLIP-RN50x4](https://drive.google.com/file/d/1q0Vhl_T344wQminWC4OkRRQtqu-Mp7SO/view?usp=sharing). 
+
 ## Environment Installation
 - Python 3
 - PyTorch 1.7+ (along with torchvision)
@@ -108,12 +110,10 @@ If you use CLIP-ViL in your research or wish to refer to the baseline results pu
 please use the following BibTeX entry. 
 
 ```shell
-@unpublished{          
-anonymous2021how,          
-title={How Much Can CLIP Benefit Vision-and-Language Tasks?},          
-author={Anonymous},          
-journal={OpenReview Preprint},          
-year={2021},          
-note={anonymous preprint under review}      
+@article{shen2021much,
+  title={How Much Can CLIP Benefit Vision-and-Language Tasks?},
+  author={Shen, Sheng and Li, Liunian Harold and Tan, Hao and Bansal, Mohit and Rohrbach, Anna and Chang, Kai-Wei and Yao, Zhewei and Keutzer, Kurt},
+  journal={arXiv preprint arXiv:2107.06383},
+  year={2021}
 }
 ```
