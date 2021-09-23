@@ -24,13 +24,14 @@ from grid_feats import (
     build_detection_test_loader_with_attributes,
 )
 from timm.models.vision_transformer import resize_pos_embed
+import timm
 
 # A simple mapper from object detection dataset to VQA dataset names
 dataset_to_folder_mapper = {}
 dataset_to_folder_mapper['coco_2014_train'] = 'train2014'
 dataset_to_folder_mapper['coco_2014_val'] = 'val2014'
-#dataset_to_folder_mapper['coco_2014_val'] = 'trainval2014'
-#dataset_to_folder_mapper['coco_2014_train'] = 'trainval2014'
+dataset_to_folder_mapper['coco_2014_val'] = 'trainval2014'
+dataset_to_folder_mapper['coco_2014_train'] = 'trainval2014'
 # One may need to change the Detectron2 code to support coco_2015_test
 # insert "coco_2015_test": ("coco/test2015", "coco/annotations/image_info_test2015.json"),
 # at: https://github.com/facebookresearch/detectron2/blob/master/detectron2/data/datasets/builtin.py#L36
@@ -65,9 +66,9 @@ def extract_grid_feature_on_dataset(model, data_loader, dump_folder):
             # modify the filename
             file_name = inputs[0]['file_name'].split("/")[-1].replace("jpg", "npy")
             outputs = outputs.permute(0, 2, 3, 1)
-            exit()
 
             with PathManager.open(os.path.join(dump_folder, file_name), "wb") as f:
+                # save as CPU tensors
                 np.save(f, outputs.cpu().numpy())
 
 def do_feature_extraction(cfg, model, dataset_name, args):
@@ -92,10 +93,22 @@ def setup(args):
     return cfg
 
 def extract_clip_feature_on_dataset(model, data_loader, dump_folder, args):
-    save_args.model_type = args.model_type.split("-")[0]
-    mean = torch.Tensor([0.48145466, 0.4578275, 0.40821073]).to("cuda").reshape(3, 1, 1)
-    std = torch.Tensor([0.26862954, 0.26130258, 0.27577711]).to("cuda").reshape(3, 1, 1)
-    dump_folder = f"clip/{save_args.model_type}/" + dump_folder.split("/")[-1]
+    if args.model_type != 'vit_base_patch32_224_in21k':
+        save_args.model_type = args.model_type.split("-")[0]
+        mean = torch.Tensor([0.48145466, 0.4578275, 0.40821073]).to("cuda").reshape(3, 1, 1)
+        std = torch.Tensor([0.26862954, 0.26130258, 0.27577711]).to("cuda").reshape(3, 1, 1)
+        dump_folder = f"clip/{save_args.model_type}/" + dump_folder.split("/")[-1]
+    else:
+        save_args.model_type = 'vit_base'
+        mean = torch.Tensor([0.5, 0.5, 0.5]).to("cuda").reshape(3, 1, 1)
+        std = torch.Tensor([0.5, 0.5, 0.5]).to("cuda").reshape(3, 1, 1)
+        dump_folder = f"clip/{save_args.model_type}/" + dump_folder.split("/")[-1]
+        print(model.pos_embed.shape)
+        num_patches = 558 #600 * 1000 // 32 // 32
+        print(num_patches)
+        pos_embed = nn.Parameter(torch.zeros(1, num_patches + 1, 768,  device='cuda'),)
+        pos_embed.weight = resize_pos_embed(model.pos_embed, pos_embed)
+        model.pos_embed = pos_embed
 
     if args.model_type == "ViT-B/32":
         num_patches = 558 #600 * 1000 // 32 // 32
@@ -103,35 +116,58 @@ def extract_clip_feature_on_dataset(model, data_loader, dump_folder, args):
         pos_embed = nn.Parameter(torch.zeros(num_patches + 1, 768,  device='cuda'),)
         pos_embed.weight = resize_pos_embed(model.visual.positional_embedding.unsqueeze(0), pos_embed.unsqueeze(0))
         model.visual.positional_embedding = pos_embed
-        print(model.visual.positional_embedding.device)
-        # pass
-    dump_folder.replace( "rscratch", "dnn" )
-    dump_folder = "/dnn/sheng.s/clip_boi/grid-feats-vqa/" + dump_folder
+       
+
     if not os.path.exists(dump_folder):
         os.makedirs(dump_folder)
     for idx, inputs in enumerate(tqdm.tqdm(data_loader)):
         with torch.no_grad():
             image_id = inputs[0]['image_id']
-            file_name = '%d.pth' % image_id
+            file_name = inputs[0]['file_name'].split("/")[-1].replace("jpg", "npy")
             # compute features
             image = inputs[0]['image'].to("cuda").float() / 255.0
             
             image = (image - mean) / std
             image = image.unsqueeze(0)
-  
-            outputs = model.encode_image(image)
+            if "RN" in args.model_type:
+                outputs = model.encode_image(image)
+            elif args.model_type == 'vit_base_patch32_224_in21k':
+                outputs = model(image)
+            else:
+                x = model.visual.conv1(image.half())  # shape = [*, width, grid, grid]
+                x = x.reshape(x.shape[0], x.shape[1], -1)  # shape = [*, width, grid ** 2]
+                x = x.permute(0, 2, 1)  # shape = [*, grid ** 2, width]
+                x = torch.cat([model.visual.class_embedding.to(x.dtype) + torch.zeros(x.shape[0], 1, x.shape[-1], dtype=x.dtype, device=x.device), x], dim=1)  # shape = [*, grid ** 2 + 1, width]
+                x = x + model.visual.positional_embedding.to(x.dtype)[:x.shape[1], :]
+                x = model.visual.ln_pre(x)
+
+                x = x.permute(1, 0, 2)  # NLD -> LND
+
+                for layer_idx, layer in enumerate(model.visual.transformer.resblocks):
+                    if layer_idx != 11:
+                        x = layer(x)  
+
+                outputs = x.permute(1, 0, 2)
+
+            
             if "RN" in args.model_type:
                 outputs = outputs.permute(0, 2, 3, 1)
             else:
-                outputs = outputs[:, :, :].reshape(1, 13, 43, 768)
+                outputs = outputs[:, 1:, :].reshape(1, 18, 31, 768)
+                
+
             with PathManager.open(os.path.join(dump_folder, file_name), "wb") as f:
                 # save as CPU tensors
-                torch.save(outputs.cpu(), f)
-  
+                np.save(f, outputs.float().cpu().numpy())
+
 def main(args):
     cfg = setup(args)
-    model, transform = load(args.model_type, jit=False)
-  
+    if args.model_type != 'vit_base_patch32_224_in21k':
+        model, transform = load(args.model_type, jit=False)  
+    else:
+        model = timm.create_model(args.model_type, pretrained=True)
+        model = model.cuda()
+    
     do_feature_extraction(cfg, model, args.dataset, args)
 
 
