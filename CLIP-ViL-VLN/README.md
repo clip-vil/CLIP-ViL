@@ -38,7 +38,7 @@ cd img_features
 unzip ResNet-152-imagenet.zip
 ```
 
-### CLIP ViT
+### CLIP Features
 For ViT features, we simply use the CLIP's encode_image function, which
 is a projection over the feature of the \[CLS\] token.
 You could download the features with this link:
@@ -47,6 +47,11 @@ wget https://nlp.cs.unc.edu/data/vln_clip/features/CLIP-ViT-B-32-views.tsv -P im
 ```
 We also provided the feature extraction code in `precomute_imagenet_views.py`.
 The images (skyboxes) need to be downloaded from [here] to extract the features.
+
+For other CLIP features on the R2R/RxR environment,
+- CLIP-Res50: nlp.cs.unc.edu/data/vln_clip/features/CLIP-ResNet-50-views.tsv
+- CLIP-Res101: nlp.cs.unc.edu/data/vln_clip/features/CLIP-ResNet-101-views.tsv
+- CLIP-Res50x4: nlp.cs.unc.edu/data/vln_clip/features/CLIP-ResNet-50x4-views.tsv
 
 ## Training RxR
 
