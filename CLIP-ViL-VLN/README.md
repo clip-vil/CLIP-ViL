@@ -46,7 +46,7 @@ You could download the features with this link:
 wget https://nlp.cs.unc.edu/data/vln_clip/features/CLIP-ViT-B-32-views.tsv -P img_features
 ```
 We also provided the feature extraction code in `precomute_imagenet_views.py`.
-The images (skyboxes) need to be downloaded from [here] to extract the features.
+The images (skyboxes) need to be downloaded from [here](https://niessner.github.io/Matterport/) to extract the features.
 
 For other CLIP features on the R2R/RxR environment,
 - CLIP-Res50: nlp.cs.unc.edu/data/vln_clip/features/CLIP-ResNet-50-views.tsv
