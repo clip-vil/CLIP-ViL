@@ -63,7 +63,8 @@ def main(params):
         if "RN" in params["model_type"]:
             num_patches = 196 #600 * 1000 // 32 // 32
             pos_embed = nn.Parameter(torch.zeros(1, num_patches + 1, model.visual.attnpool.positional_embedding.shape[-1],  device='cuda'),)
-            pos_embed.weight = resize_pos_embed(model.visual.attnpool.positional_embedding.unsqueeze(0), pos_embed)
+            resized_pos_embed_weight = resize_pos_embed(model.visual.attnpool.positional_embedding.unsqueeze(0), pos_embed)
+            pos_embed = nn.Parameter(resized_pos_embed_weight.squeeze(0),)
             model.visual.attnpool.positional_embedding = pos_embed
 
     else:
@@ -79,7 +80,8 @@ def main(params):
     if params["model_type"] == "ViT-B/32":
         num_patches = 196 #600 * 1000 // 32 // 32
         pos_embed = nn.Parameter(torch.zeros(num_patches + 1, 768,  device='cuda'),)
-        pos_embed.weight = resize_pos_embed(model.visual.positional_embedding.unsqueeze(0), pos_embed.unsqueeze(0))
+        resized_pos_embed_weight = resize_pos_embed(model.visual.positional_embedding.unsqueeze(0), pos_embed.unsqueeze(0))
+        pos_embed = nn.Parameter(resized_pos_embed_weight.squeeze(0),)
         model.visual.positional_embedding = pos_embed
     imgs = json.load(open(params['input_json'], 'r'))
     imgs = imgs['images']
