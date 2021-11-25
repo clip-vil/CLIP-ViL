@@ -107,7 +107,8 @@ def extract_clip_feature_on_dataset(model, data_loader, dump_folder, args):
         num_patches = 558 #600 * 1000 // 32 // 32
         print(num_patches)
         pos_embed = nn.Parameter(torch.zeros(1, num_patches + 1, 768,  device='cuda'),)
-        pos_embed.weight = resize_pos_embed(model.pos_embed, pos_embed)
+        resized_pos_embed_weight = resize_pos_embed(model.visual.attnpool.positional_embedding.unsqueeze(0), pos_embed)
+        pos_embed = nn.Parameter(resized_pos_embed_weight.squeeze(0),)
         model.pos_embed = pos_embed
 
     if args.model_type == "ViT-B/32":
