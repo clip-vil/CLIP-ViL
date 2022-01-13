@@ -115,7 +115,8 @@ def extract_clip_feature_on_dataset(model, data_loader, dump_folder, args):
         num_patches = 558 #600 * 1000 // 32 // 32
         print(num_patches)
         pos_embed = nn.Parameter(torch.zeros(num_patches + 1, 768,  device='cuda'),)
-        pos_embed.weight = resize_pos_embed(model.visual.positional_embedding.unsqueeze(0), pos_embed.unsqueeze(0))
+        resized_pos_embed_weight = resize_pos_embed(model.visual.attnpool.positional_embedding.unsqueeze(0), pos_embed)
+        pos_embed = nn.Parameter(resized_pos_embed_weight.squeeze(0),)
         model.visual.positional_embedding = pos_embed
        
 

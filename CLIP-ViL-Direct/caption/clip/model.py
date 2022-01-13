@@ -80,10 +80,8 @@ class AttentionPool2d(nn.Module):
             bias_v=None,
             add_zero_attn=False,
             dropout_p=0,
-            out_proj_weight=torch.ones_like(self.q_proj.weight),
-            out_proj_bias=torch.zeros_like(self.q_proj.bias),
-            # out_proj_weight=self.c_proj.weight,
-            # out_proj_bias=self.c_proj.bias,
+            out_proj_weight=self.c_proj.weight,
+            out_proj_bias=self.c_proj.bias,
             use_separate_proj_weight=True,
             training=self.training,
             need_weights=False
